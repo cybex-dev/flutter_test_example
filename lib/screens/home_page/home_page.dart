@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_test_example/components/components.dart';
 import 'package:provider/provider.dart';
 
@@ -31,9 +32,6 @@ class _Page extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
             _CounterText(),
           ],
         ),
@@ -51,8 +49,9 @@ class _CounterText extends StatelessWidget {
     TextStyle? style = Theme.of(context).textTheme.headlineMedium;
     return Consumer<Counter>(
       builder: (context, value, child) {
+        final text = AppLocalizations.of(context)!.pressedText(value.value);
         return Text(
-          value.value.toString(),
+          text,
           style: style,
         );
       },
