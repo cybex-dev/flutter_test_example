@@ -27,6 +27,9 @@ class _Page extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(pageTitle),
+        actions: const [
+          _ChangeLocale(),
+        ],
       ),
       body: Center(
         child: Column(
@@ -37,6 +40,41 @@ class _Page extends StatelessWidget {
         ),
       ),
       floatingActionButton: const _FAB(),
+    );
+  }
+}
+
+class _ChangeLocale extends StatelessWidget {
+  const _ChangeLocale({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<Localization>(
+      builder: (context, value, child) {
+        final popupItems = value.supportedLocales.map((locale) {
+          return PopupMenuItem<Locale>(
+            value: locale,
+            child: Text(locale.languageCode),
+          );
+        }).toList();
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text("Change locale"),
+            const SizedBox(width: 10),
+            PopupMenuButton<Locale>(
+              child: Text(value.currentLocale.languageCode),
+              onSelected: (locale) {
+                context.read<Localization>().currentLocale = locale;
+              },
+              itemBuilder: (_) => popupItems,
+            ),
+          ],
+        );
+      },
     );
   }
 }
