@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:test_app/components/components.dart';
+import 'package:flutter_test_example/components/components.dart';
 
 void main() {
   group("Localization Tests", () {
