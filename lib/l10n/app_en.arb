@@ -1,0 +1,19 @@
+{
+  "appTitle": "Flutter Test Example",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "changeLocale": "Change locale",
+  "@changeLocale": {
+    "description": "A button to change the locale"
+  },
+  "pressedText": "You have pressed the button {count} times",
+  "@pressedText": {
+    "description": "A message to show how many times the button has been pressed",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}
