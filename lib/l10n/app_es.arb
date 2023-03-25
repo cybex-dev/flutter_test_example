@@ -1,0 +1,5 @@
+{
+  "appTitle": "Flutter Test Example",
+  "changeLocale": "Cambiar configuración regional",
+  "pressedText": "Has pulsado el botón {count} veces"
+}
