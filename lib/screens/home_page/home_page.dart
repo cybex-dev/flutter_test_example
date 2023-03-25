@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_test_example/components/components.dart';
 import 'package:provider/provider.dart';
 
@@ -26,19 +27,54 @@ class _Page extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(pageTitle),
+        actions: const [
+          _ChangeLocale(),
+        ],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
             _CounterText(),
           ],
         ),
       ),
       floatingActionButton: const _FAB(),
+    );
+  }
+}
+
+class _ChangeLocale extends StatelessWidget {
+  const _ChangeLocale({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<Localization>(
+      builder: (context, value, child) {
+        final popupItems = value.supportedLocales.map((locale) {
+          return PopupMenuItem<Locale>(
+            value: locale,
+            child: Text(locale.languageCode),
+          );
+        }).toList();
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text("Change locale"),
+            const SizedBox(width: 10),
+            PopupMenuButton<Locale>(
+              child: Text(value.currentLocale.languageCode),
+              onSelected: (locale) {
+                context.read<Localization>().currentLocale = locale;
+              },
+              itemBuilder: (_) => popupItems,
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -51,8 +87,9 @@ class _CounterText extends StatelessWidget {
     TextStyle? style = Theme.of(context).textTheme.headlineMedium;
     return Consumer<Counter>(
       builder: (context, value, child) {
+        final text = AppLocalizations.of(context)!.pressedText(value.value);
         return Text(
-          value.value.toString(),
+          text,
           style: style,
         );
       },
